@@ -109,6 +109,11 @@
         return;
       }
       if (!this.activated) {
+        // We skip Chromium's slide-in animation, so preserve its final
+        // position explicitly instead of leaving the T-Rex against the edge.
+        const startX = this.tRex.config.START_X_POS;
+        this.tRex.xPos = startX;
+        this.tRex.xInitialPos = startX;
         this.setPlayStatus(true);
         this.activated = true;
         this.startGame();
