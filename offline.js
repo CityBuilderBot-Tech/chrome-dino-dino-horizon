@@ -486,7 +486,9 @@ Runner.prototype = {
 
     this.canvasCtx =
         /** @type {CanvasRenderingContext2D} */ (this.canvas.getContext('2d'));
-    this.canvasCtx.fillStyle = '#f7f7f7';
+    // Keep the canvas transparent so Dino Horizon's scenic background remains
+    // visible instead of Chromium's plain light-gray fallback surface.
+    this.canvasCtx.fillStyle = 'rgba(0, 0, 0, 0)';
     this.canvasCtx.fill();
     Runner.updateCanvasScaling(this.canvas);
 
