@@ -37,8 +37,10 @@
     }
     .runner-canvas {
       display: block; max-width: 100%;
-      /* Gives Chromium's monochrome sprites a warm teal game-art finish. */
-      filter: sepia(.9) saturate(1.8) hue-rotate(118deg) contrast(1.08);
+      /* Gives the Dino, obstacles and score richer colored pixel edges. */
+      filter: sepia(.92) saturate(2.65) hue-rotate(111deg) contrast(1.2)
+        brightness(1.06) drop-shadow(0 1px 0 rgb(217 255 243 / 72%))
+        drop-shadow(0 0 3px rgb(24 184 159 / 36%));
     }
     .slow-speed-option, #offline-resources { display: none; }
     /* The game's internal 640 × 150 layout stays unchanged; only its
@@ -54,7 +56,7 @@
       body { background: linear-gradient(145deg, #162a3b, #29414e 55%, #5a4340); color: #fff3df; }
       .intro { color: #f4d9bd; }
       kbd { background: rgb(255 255 255 / 14%); }
-      .runner-canvas { filter: sepia(.9) saturate(1.8) hue-rotate(118deg) contrast(1.08) brightness(1.15); }
+      .runner-canvas { filter: sepia(.92) saturate(2.65) hue-rotate(111deg) contrast(1.2) brightness(1.18) drop-shadow(0 1px 0 rgb(217 255 243 / 72%)) drop-shadow(0 0 3px rgb(24 184 159 / 40%)); }
     }
   </style>
 </head>
