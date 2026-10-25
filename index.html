@@ -14,18 +14,31 @@
     * { box-sizing: border-box; }
     body {
       min-height: 100vh; margin: 0; display: grid; place-items: center;
-      background: linear-gradient(145deg, #eaf7ff 0%, #ffd9a1 100%); color: #4a2f28;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 14% 18%, rgb(255 255 255 / 72%) 0 2px, transparent 3px),
+        radial-gradient(circle at 78% 14%, rgb(255 255 255 / 65%) 0 1px, transparent 2px),
+        linear-gradient(145deg, #b9e7ff 0%, #ffe1ad 56%, #f7ba7a 100%);
+      color: #4a2f28;
       font: 16px/1.5 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
-    .page { width: min(1040px, calc(100% - 32px)); text-align: center; }
-    h1 { margin: 0 0 6px; font-size: 24px; font-weight: 650; }
-    p { margin: 0 0 25px; }
+    .page { width: min(1040px, calc(100% - 32px)); text-align: center; padding: 36px 0; }
+    .eyebrow {
+      display: inline-block; margin: 0 0 8px; padding: 5px 11px; border-radius: 999px;
+      background: rgb(255 255 255 / 58%); border: 1px solid rgb(255 255 255 / 75%);
+      color: #6b493e; font-size: 12px; font-weight: 800; letter-spacing: .11em; text-transform: uppercase;
+    }
+    h1 { margin: 0; font-family: ui-rounded, "Arial Rounded MT Bold", system-ui, sans-serif; font-size: clamp(30px, 5vw, 48px); line-height: 1; letter-spacing: -.045em; }
+    .intro { max-width: 520px; margin: 12px auto 26px; color: #704c3f; }
+    .controls { display: flex; justify-content: center; gap: 9px; margin: 0 0 26px; flex-wrap: wrap; }
+    .controls span { padding: 6px 10px; border-radius: 10px; background: rgb(255 255 255 / 62%); box-shadow: inset 0 1px rgb(255 255 255 / 80%); font-size: 13px; font-weight: 700; }
     .interstitial-wrapper { width: min(680px, 100%); padding: 0 20px; margin: auto; }
     .icon-offline { display: none; }
     .runner-container {
       margin: auto; outline: none; touch-action: manipulation;
       overflow: hidden; border-radius: 12px;
-      box-shadow: 0 12px 32px rgb(86 50 40 / 22%);
+      border: 2px solid rgb(255 252 241 / 82%);
+      box-shadow: 0 18px 42px rgb(86 50 40 / 25%), 0 3px 0 rgb(138 78 46 / 18%);
       background: #f9d39d url("assets/desert-background.png") center / cover no-repeat;
     }
     .runner-canvas {
@@ -44,14 +57,23 @@
       }
     }
     @media (prefers-color-scheme: dark) {
-      body { background: #182b3a; color: #fff3df; }
+      body { background: linear-gradient(145deg, #162a3b, #29414e 55%, #5a4340); color: #fff3df; }
+      .eyebrow, .controls span { background: rgb(255 255 255 / 12%); border-color: rgb(255 255 255 / 18%); color: #fff3df; }
+      .intro { color: #f4d9bd; }
       .runner-canvas { filter: sepia(.9) saturate(1.8) hue-rotate(118deg) contrast(1.08) brightness(1.15); }
     }
   </style>
 </head>
 <body>
   <main class="page">
-    <p>Leertaste, Pfeil nach oben oder Antippen zum Springen. Pfeil nach unten zum Ducken.</p>
+    <div class="eyebrow">Offline Runner</div>
+    <h1>Dino Horizon</h1>
+    <p class="intro">Ein schneller Sprint durch die Wüste – bereit, wenn du bist.</p>
+    <div class="controls" aria-label="Steuerung">
+      <span>Leertaste / ↑ Springen</span>
+      <span>↓ Ducken</span>
+      <span>Antippen Springen</span>
+    </div>
     <div class="interstitial-wrapper">
       <div class="icon-offline" aria-hidden="true"></div>
     </div>
@@ -86,9 +108,27 @@
   <script src="offline.js"></script>
   <script src="offline-sprite-definitions.js"></script>
   <script>
-    // Audio resources in Chromium's error page are embedded data URLs. The
-    // standalone wrapper leaves sound disabled, so it also works from file://.
-    Runner.prototype.loadSounds = function() {};
+    // Native browser audio works directly from this folder, including file://.
+    // It replaces Chromium's embedded error-page audio data URLs.
+    Runner.prototype.loadSounds = function() {
+      if (this.standaloneSoundsLoaded) return;
+      this.standaloneSoundsLoaded = true;
+      this.soundFx = {
+        BUTTON_PRESS: new Audio('assets/button-press.mp3'),
+        HIT: new Audio('assets/hit.mp3'),
+        SCORE: new Audio('assets/score-reached.mp3')
+      };
+      Object.values(this.soundFx).forEach((audio) => {
+        audio.preload = 'auto';
+        audio.volume = .45;
+      });
+    };
+    Runner.prototype.playSound = function(sound) {
+      if (!sound || typeof sound.cloneNode !== 'function') return;
+      const instance = sound.cloneNode();
+      instance.volume = sound.volume;
+      instance.play().catch(() => {});
+    };
     new Runner('.interstitial-wrapper');
   </script>
 </body>
