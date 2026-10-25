@@ -1,0 +1,95 @@
+<!doctype html>
+<!--
+  Standalone wrapper for Chromium's offline T-Rex Runner.
+  Game source and art: Chromium Authors, BSD 3-Clause license (see LICENSE).
+-->
+<html lang="de" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chrome Dino – Dino Horizon</title>
+  <meta name="description" content="Dino Horizon: ein kostenloses, inoffizielles Chrome-Dino-inspiriertes Offline-Runner-Spiel.">
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body {
+      min-height: 100vh; margin: 0; display: grid; place-items: center;
+      background: linear-gradient(145deg, #eaf7ff 0%, #ffd9a1 100%); color: #4a2f28;
+      font: 16px/1.5 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .page { width: min(1040px, calc(100% - 32px)); text-align: center; }
+    h1 { margin: 0 0 6px; font-size: 24px; font-weight: 650; }
+    p { margin: 0 0 25px; }
+    .interstitial-wrapper { width: min(680px, 100%); padding: 0 20px; margin: auto; }
+    .icon-offline { display: none; }
+    .runner-container {
+      margin: auto; outline: none; touch-action: manipulation;
+      overflow: hidden; border-radius: 12px;
+      box-shadow: 0 12px 32px rgb(86 50 40 / 22%);
+      background: #f9d39d url("assets/desert-background.png") center / cover no-repeat;
+    }
+    .runner-canvas {
+      display: block; max-width: 100%;
+      /* Gives Chromium's monochrome sprites a warm teal game-art finish. */
+      filter: sepia(.9) saturate(1.8) hue-rotate(118deg) contrast(1.08);
+    }
+    .slow-speed-option, #offline-resources { display: none; }
+    /* The game's internal 640 × 150 layout stays unchanged; only its
+       presentation grows on large screens. */
+    @media (min-width: 1050px) {
+      .interstitial-wrapper {
+        transform: scale(1.5);
+        transform-origin: center;
+        margin-block: 44px;
+      }
+    }
+    @media (prefers-color-scheme: dark) {
+      body { background: #182b3a; color: #fff3df; }
+      .runner-canvas { filter: sepia(.9) saturate(1.8) hue-rotate(118deg) contrast(1.08) brightness(1.15); }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <p>Leertaste, Pfeil nach oben oder Antippen zum Springen. Pfeil nach unten zum Ducken.</p>
+    <div class="interstitial-wrapper">
+      <div class="icon-offline" aria-hidden="true"></div>
+    </div>
+  </main>
+
+  <!-- All gameplay art is inside this folder; no web requests are made. -->
+  <div id="offline-resources" hidden>
+    <img id="offline-resources-1x" src="assets/offline-sprite-1x.png" alt="">
+    <img id="offline-resources-2x" src="assets/offline-sprite-2x.png" alt="">
+  </div>
+
+  <script>
+    // Minimal compatibility object normally supplied by Chromium's error page.
+    // It keeps the original game source itself unmodified.
+    window.loadTimeData = {
+      valueExists: () => false,
+      getString: () => ''
+    };
+    // Always select Chromium's 2× sprite atlas and 2× canvas backing store.
+    // This retains every original animation and coordinate while making the
+    // game less blocky even on non-Retina displays.
+    try {
+      const nativePixelRatio = window.devicePixelRatio || 1;
+      Object.defineProperty(window, 'devicePixelRatio', {
+        configurable: true,
+        get: () => Math.max(2, nativePixelRatio)
+      });
+    } catch (_) {
+      // Browsers that protect this property keep their native display scale.
+    }
+  </script>
+  <script src="offline.js"></script>
+  <script src="offline-sprite-definitions.js"></script>
+  <script>
+    // Audio resources in Chromium's error page are embedded data URLs. The
+    // standalone wrapper leaves sound disabled, so it also works from file://.
+    Runner.prototype.loadSounds = function() {};
+    new Runner('.interstitial-wrapper');
+  </script>
+</body>
+</html>
