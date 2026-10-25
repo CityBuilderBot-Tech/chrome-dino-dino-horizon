@@ -42,6 +42,24 @@
         brightness(1.06) drop-shadow(0 1px 0 rgb(217 255 243 / 72%))
         drop-shadow(0 0 3px rgb(24 184 159 / 36%));
     }
+    /* Short rainbow flash for the score-reached “dudüm” sound. */
+    .runner-container.score-burst {
+      animation: score-burst .62s ease-out;
+    }
+    .runner-container.score-burst .runner-canvas {
+      animation: score-colors .62s steps(4, end);
+    }
+    @keyframes score-burst {
+      0% { box-shadow: 0 0 0 0 rgb(255 210 78 / 0%), 0 18px 42px rgb(86 50 40 / 25%); }
+      35% { box-shadow: 0 0 0 5px rgb(255 219 96 / 92%), 0 0 26px 10px rgb(252 90 177 / 58%), 0 18px 42px rgb(86 50 40 / 25%); }
+      100% { box-shadow: 0 0 0 0 rgb(91 232 255 / 0%), 0 18px 42px rgb(86 50 40 / 25%); }
+    }
+    @keyframes score-colors {
+      0% { filter: sepia(.92) saturate(2.65) hue-rotate(111deg) contrast(1.2) brightness(1.06); }
+      33% { filter: sepia(1) saturate(3.2) hue-rotate(205deg) contrast(1.32) brightness(1.22); }
+      66% { filter: sepia(1) saturate(3) hue-rotate(285deg) contrast(1.28) brightness(1.18); }
+      100% { filter: sepia(.92) saturate(2.65) hue-rotate(111deg) contrast(1.2) brightness(1.06); }
+    }
     .slow-speed-option, #offline-resources { display: none; }
     /* The game's internal 640 × 150 layout stays unchanged; only its
        presentation grows on large screens. */
@@ -138,6 +156,13 @@
     };
     Runner.prototype.playSound = function(sound) {
       if (!sound || typeof sound.cloneNode !== 'function') return;
+      if (sound === this.soundFx.SCORE) {
+        const field = this.containerEl;
+        field.classList.remove('score-burst');
+        // Restart the animation for consecutive score milestones.
+        void field.offsetWidth;
+        field.classList.add('score-burst');
+      }
       const instance = sound.cloneNode();
       instance.volume = sound.volume;
       instance.play().catch(() => {});
