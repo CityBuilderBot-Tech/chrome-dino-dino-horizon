@@ -9,6 +9,12 @@ ruhigeren Darstellung. Ein farbiger Wüstenhintergrund ergänzt die Spielszene.
 > Hinweis: Dino Horizon ist ein inoffizielles, eigenständiges Fan-Projekt und
 > ist nicht mit Google oder Chrome verbunden bzw. von ihnen unterstützt.
 
+## Live spielen
+
+Das Projekt ist öffentlich gehostet und direkt im Browser spielbar:
+
+https://citybuilderbot-tech.github.io/chrome-dino-dino-horizon/
+
 ## Starten
 
 `index.html` in einem modernen Browser öffnen – das funktioniert auf macOS,
