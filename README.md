@@ -20,8 +20,8 @@ https://citybuilderbot-tech.github.io/chrome-dino-dino-horizon/
 `index.html` in einem modernen Browser öffnen – das funktioniert auf macOS,
 Windows und Linux direkt, ohne Installation oder Server.
 
-Steuerung: Leertaste / ↑ / Antippen springt, ↓ duckt sich, Enter startet nach
-einem Absturz erneut.
+Steuerung: Leertaste startet und springt, Shift duckt sich. Nach einem Absturz
+startet die Leertaste erneut.
 
 Die ursprüngliche Chromium-Spielquellen liegen unverändert in `offline.js` und
 `offline-sprite-definitions.js`. Der Browser-Wrapper in `index.html` stellt nur
