@@ -4,7 +4,7 @@ Ein vollständig lokales Paket des Chromium T-Rex Runner (Chromium 98.0.4758.55)
 Keine Installation, kein Server und keine Internetverbindung sind nötig. Die
 Spielansicht verwendet durchgehend Chromiums 2×-Sprite-Atlas und eine 2×-Canvas-
 Auflösung. Das bewahrt alle originalen Animationsabläufe bei einer deutlich
-ruhigeren Darstellung. Ein farbiger Wüstenhintergrund ergänzt die Spielszene.
+ruhigeren Darstellung. Ein farbiger Himmel-/Horizont-Hintergrund ergänzt die Spielszene.
 
 > Hinweis: Dino Horizon ist ein inoffizielles, eigenständiges Fan-Projekt und
 > ist nicht mit Google oder Chrome verbunden bzw. von ihnen unterstützt.
