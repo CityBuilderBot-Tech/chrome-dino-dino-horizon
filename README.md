@@ -20,9 +20,7 @@ einem Absturz erneut.
 Die ursprüngliche Chromium-Spielquellen liegen unverändert in `offline.js` und
 `offline-sprite-definitions.js`. Der Browser-Wrapper in `index.html` stellt nur
 die lokale Startseite und das Sprite-Sheet bereit. Sounds sind im Paket als Originaldateien enthalten, aber
-absichtlich nicht aktiviert: Chromium bettet sie in seiner Fehlerseite als
-Daten-URLs ein; das Deaktivieren macht den Start direkt per `file://` in jedem
-Browser robust.
+aktiviert und funktionieren direkt beim Öffnen der `index.html`.
 
 ## Lizenz
 
