@@ -100,9 +100,10 @@
   <script src="offline.js?v=959f5cda"></script>
   <script src="offline-sprite-definitions.js"></script>
   <script>
-    // Simplified standalone controls: space starts/jumps, Shift ducks.
-    Runner.keycodes.JUMP = {'32': 1};
-    Runner.keycodes.DUCK = {'16': 1};
+    // The compact on-screen hint names just Space and Shift, but arrow keys
+    // and Chromium's native touch controls remain available too.
+    Runner.keycodes.JUMP = {'38': 1, '32': 1};
+    Runner.keycodes.DUCK = {'40': 1, '16': 1};
     // Skip Chromium's first-run width/slide animation and start instantly.
     Runner.prototype.playIntro = function() {
       if (this.crashed) {
