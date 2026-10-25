@@ -11,8 +11,8 @@ ruhigeren Darstellung. Ein farbiger Wüstenhintergrund ergänzt die Spielszene.
 
 ## Starten
 
-- macOS: `start.command` doppelklicken (beim ersten Mal ggf. Rechtsklick → Öffnen).
-- Jedes Betriebssystem: `index.html` in einem modernen Browser öffnen.
+`index.html` in einem modernen Browser öffnen – das funktioniert auf macOS,
+Windows und Linux direkt, ohne Installation oder Server.
 
 Steuerung: Leertaste / ↑ / Antippen springt, ↓ duckt sich, Enter startet nach
 einem Absturz erneut.
