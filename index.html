@@ -92,6 +92,8 @@
       valueExists: () => false,
       getString: () => ''
     };
+    // Constant normally supplied by Chromium's network-error page styles.
+    window.HIDDEN_CLASS = 'hidden';
     // Always select Chromium's 2× sprite atlas and 2× canvas backing store.
     // This retains every original animation and coordinate while making the
     // game less blocky even on non-Retina displays.
